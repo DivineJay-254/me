@@ -8,7 +8,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "YOUR_API_KEY_HERE",
   authDomain: "whatsappj-83cc1.firebaseapp.com",
   databaseURL: "https://whatsappj-83cc1-default-rtdb.firebaseio.com",
   projectId: "whatsappj-83cc1",
@@ -20,6 +20,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Only initialize analytics if API key is set
+let analytics = null;
+if (process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+  analytics = getAnalytics(app);
+}
 
 export { app, analytics };
